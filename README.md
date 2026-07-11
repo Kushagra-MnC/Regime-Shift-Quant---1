@@ -155,5 +155,5 @@ HOLDOUT PERFORMANCE  —  Jan 2024 → Dec 2024  (12 months)
   | 6 | Analysis — 9 publication charts, factor decomposition |
   | **7** | **Holdout — run once, results final** |
   
-**One-sentence pitch:** We train a Hidden Markov Model on Indian macro data to detect Bull or Crisis conditions, then use CVXPY to find the minimum-variance portfolio that automatically shifts defensive as confidence in a Crisis rises — tested rigorously with no look-ahead bias and confirmed on a sealed 2024 holdout.
+**Project Summary** :  **We train a Hidden Markov Model on Indian macro data to detect Bull or Crisis conditions, then use CVXPY to find the minimum-variance portfolio that automatically shifts defensive as confidence in a Crisis rises — tested rigorously with no look-ahead bias and confirmed on a sealed 2024 holdout.**
   
