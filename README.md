@@ -151,7 +151,7 @@ HOLDOUT PERFORMANCE  —  Jan 2024 → Dec 2024  (12 months)
   | 2 | HMM exploration — feature engineering, BIC grid |
   | 3 | HMM production — n=2 states, composite alignment |
   | 4 | Optimizer — CVXPY min-variance, Ledoit-Wolf, TC model |
-  | 5 | Walk-forward — v2: soft blend, asymmetric persist |
+  | 5 | Walk-forward — soft blend, asymmetric persist |
   | 6 | Analysis — 9 publication charts, factor decomposition |
   | **7** | **Holdout — run once, results final** |
   
