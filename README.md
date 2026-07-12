@@ -5,12 +5,14 @@ A systematic, macro-aware portfolio optimization pipeline utilizing Hidden Marko
 ## About
 This repository contains a full quantitative research pipeline for a tactical asset allocation engine. The strategy avoids traditional momentum whipsaws by classifying market regimes (Bull vs. Crisis) through a Gaussian Hidden Markov Model evaluated on realized volatility. By dynamically soft-blending target weights based on the forward-algorithm probability of a crisis state, the engine actively manages downside risk and transaction friction across a highly liquid, index-level ETF universe.
 
+**The PS suggested Max Sharpe in Bull; we use Min Variance with regime-specific equity ceiling bounds instead, since Max Sharpe is non-convex and cannot be solved directly in CVXPY.**
+
 ## System Architecture
 The pipeline is structured with strict isolation between data ingestion, signal generation, and out-of-sample backtesting to mathematically eliminate look-ahead bias.
 
 *   **Asset Universe**: Broad market index ETFs representing distinct risk premiums (NIFTYBEES, JUNIORBEES, GOLDBEES, LIQUIDBEES).
 *   **Regime Detection Engine**: The project utilizes a 2-state Gaussian Hidden Markov Model (HMM).
-*   **State Alignment**: States are aligned objectively using mean realized volatility (Low Volatility = Bull, High Volatility = Crisis).
+*   **State Alignment**: States are aligned objectively using composite risk-on score (-vol_z + 0.5×mom_z) (Low Volatility = Bull, High Volatility = Crisis).
 *   **Signal Decoding**: Implements `predict_proba` (the forward algorithm) rather than Viterbi decoding to ensure real-time, causal state classification without future data leakage.
 *   **Asymmetric Persistence Filter**: Imposes a strict regime transition logic (1 month to enter Crisis, 3 months to exit) to prevent premature re-entry into risk assets during volatile macroeconomic recoveries.
 *   **Execution Logic**: Continuous allocation soft-blending based on state probabilities to minimize transaction cost (TC) drag and portfolio turnover.
@@ -72,6 +74,17 @@ dataset/
    pip install -r requirements.txt
    ```
    *(Ensure `hmmlearn`, `cvxpy`, `pandas`, and `numpy` are correctly configured).*
+   hmmlearn==0.3.2
+cvxpy==1.4.2
+numpy>=1.24
+pandas>=2.0
+matplotlib>=3.7
+scikit-learn>=1.3
+yfinance>=0.2.36
+pandas-datareader>=0.10
+pandas-market-calendars>=4.3
+scipy>=1.11
+clarabel
 
 ## Execution
 Run the notebooks strictly in sequential order (01 through 07).
@@ -154,6 +167,7 @@ HOLDOUT PERFORMANCE  —  Jan 2024 → Dec 2024  (12 months)
   | 5 | Walk-forward — soft blend, asymmetric persist |
   | 6 | Analysis — 9 publication charts, factor decomposition |
   | **7** | **Holdout — run once, results final** |
+
   
 **Project Summary** :  **We train a Hidden Markov Model on Indian macro data to detect Bull or Crisis conditions, then use CVXPY to find the minimum-variance portfolio that automatically shifts defensive as confidence in a Crisis rises — tested rigorously with no look-ahead bias and confirmed on a sealed 2024 holdout.**
   
