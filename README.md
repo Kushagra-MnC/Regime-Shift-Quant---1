@@ -36,13 +36,13 @@ Where $w_t$ represents the final target weight vector at rebalance date $t$.
 ## Repository Structure
 The workflow is broken down into modular, highly reproducible stages:
 
-*   `01_Data_Foundation.ipynb`: Ingestion, cleaning, and formatting of ETF price data and macro features.
-*   `02_HMM_Training.ipynb`: Unsupervised learning of the 2-state regime model and volatility alignment.
-*   `03_Walk_Forward_Inference.ipynb`: Implementation of the forward algorithm to generate causal P(Crisis) probabilities.
-*   `04_Portfolio_Optimization.ipynb`: CVXPY implementation of the soft-blend allocation vectors.
-*   `05_Friction_and_Constraints.ipynb`: Application of transaction costs (TC) and the asymmetric persistence filter.
-*   `06_Backtest_Engine.ipynb`: Generation of core performance metrics and comparison against baselines.
-*   `07_Holdout_Sanctity_2024.ipynb`: Final, single-run evaluation on quarantined out-of-sample 2024 data to verify absence of hyperparameter overfitting.
+*   `REGIME_SHIFT_Stage1_f6.ipynb`: Ingestion, cleaning, and formatting of ETF price data and macro features.
+*   `REGIME_SHIFT_Stage2_f6.ipynb`: Unsupervised learning of the 2-state regime model and volatility alignment.
+*   `REGIME_SHIFT_Stage3_f6.ipynb`: Implementation of the forward algorithm to generate causal P(Crisis) probabilities.
+*   `REGIME_SHIFT_Stage4_f6.ipynb`: CVXPY implementation of the soft-blend allocation vectors.
+*   `REGIME_SHIFT_Stage5_final_f6.ipynb`: Application of transaction costs (TC) and the asymmetric persistence filter.
+*   `REGIME_SHIFT_Stage6_f6.ipynb`: Generation of core performance metrics and comparison against baselines.
+*   `REGIME_SHIFT_Stage7_f6.ipynb`: Final, single-run evaluation on quarantined out-of-sample 2024 data to verify absence of hyperparameter overfitting.
 
 ## Data Integrity & Reproducibility
 To guarantee absolute determinism in backtesting and avoid dependency on external APIs (which are prone to downtime and data revisions), this engine operates on a local, immutable dataset.
