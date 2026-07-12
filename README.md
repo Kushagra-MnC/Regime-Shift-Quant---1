@@ -10,7 +10,7 @@ The pipeline is structured with strict isolation between data ingestion, signal 
 
 *   **Asset Universe**: Broad market index ETFs representing distinct risk premiums (NIFTYBEES, JUNIORBEES, GOLDBEES, LIQUIDBEES).
 *   **Regime Detection Engine**: The project utilizes a 2-state Gaussian Hidden Markov Model (HMM).
-*   **State Alignment**: States are aligned objectively using composite risk-on score (-vol_z + 0.5×mom_z) (Low Volatility = Bull, High Volatility = Crisis).
+*   **State Alignment**: The regime detection engine utilizes a multi-factor composite risk score, where Bull/Crisis states are determined by a weighted sum of momentum and trend factors (60% weight) against realized volatility and macroeconomic stress indicators (VIX, INR, G-Sec, 40% weight).
 *   **Signal Decoding**: Implements `predict_proba` (the forward algorithm) rather than Viterbi decoding to ensure real-time, causal state classification without future data leakage.
 *   **Asymmetric Persistence Filter**: Imposes a strict regime transition logic (1 month to enter Crisis, 3 months to exit) to prevent premature re-entry into risk assets during volatile macroeconomic recoveries.
 *   **Execution Logic**: Continuous allocation soft-blending based on state probabilities to minimize transaction cost (TC) drag and portfolio turnover.
