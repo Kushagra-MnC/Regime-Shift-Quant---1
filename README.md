@@ -65,7 +65,7 @@ dataset/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Kushagra-MnC/regime-shift-allocation.git
+   https://github.com/Kushagra-MnC/Regime-Shift-Quant---1
    cd regime-shift-allocation
    ```
 
