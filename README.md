@@ -45,19 +45,26 @@ The workflow is broken down into modular, highly reproducible stages:
 *   `REGIME_SHIFT_Stage7_f6.ipynb`: Final, single-run evaluation on quarantined out-of-sample 2024 data to verify absence of hyperparameter overfitting.
 
 ## Data Integrity & Reproducibility
-To guarantee absolute determinism in backtesting and avoid dependency on external APIs (which are prone to downtime and data revisions), this engine operates on a local, immutable dataset.
 
-*   **Data Source**: The project utilizes locally stored Parquet files located in the `dataset/` directory.
+To guarantee absolute determinism in backtesting and avoid dependency on external APIs
+(which are prone to downtime and data revisions), this engine operates on locally stored
+raw data, and generates all intermediate/derived data on disk as it runs.
 
-```text
-dataset/
-├── etf_prices.parquet
-├── macro_features.parquet
-└── metadata.json
-```
+**Raw input data** — place these files in a `dataset/` folder alongside the notebooks:
 
-*   **Pipeline Independence**: No runtime data fetching is required. This ensures the engine is "air-gapped," allowing for identical result generation regardless of internet connectivity or API availability.
-*   **Setup**: Users must ensure the `dataset/` directory is populated with the requisite price and macro feature files before executing the Stage 1 notebook.
+<img width="134" height="134" alt="image" src="https://github.com/user-attachments/assets/88abec5c-df57-4385-a38f-30eb9e1cd450" />
+
+
+**Generated data** — running Stage 1 creates a `data/` folder with all downstream
+artifacts consumed by Stages 2–7:
+
+<img width="186" height="181" alt="image" src="https://github.com/user-attachments/assets/d7001ec6-c002-46c6-b01f-b171b0e454a6" />
+
+- **Pipeline Independence**: Once `dataset/` is populated, no runtime data fetching is
+  required for the ETFs, NSEI, USDINR, VIX, or G-Sec inputs. (If `GSEC_10Y.parquet` is
+  missing, Stage 1 falls back to a live FRED fetch.)
+- **Setup**: Place the raw files above in `dataset/` before running Stage 1. Stage 1 will
+  create `data/` automatically and populate it for the remaining stages.
 
 ## Installation
 
