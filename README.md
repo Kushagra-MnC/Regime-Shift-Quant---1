@@ -92,7 +92,7 @@ scipy>=1.11
 clarabel
 
 ## Execution
-Run the notebooks strictly in sequential order (01 through 07).
+Run the notebooks strictly in sequential order (Stage 01 through Stage 07).
 
 > [!NOTE]
 > **Holdout Data**: Notebook `REGIME_SHIFT_Stage7_f6.ipynb` accesses a quarantined dataset. The random seed parameters for the HMM initialization are hardcoded to ensure identical transition matrix generation upon reproduction.
