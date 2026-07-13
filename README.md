@@ -224,3 +224,77 @@ Crisis timing (Nifty ↓ in Crisis months) : 45%
 - `pip install -r requirements.txt`
 
 Dependencies: `hmmlearn`, `cvxpy`, `clarabel`, `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `scipy`, `yfinance`, `pandas-datareader`, `pandas-market-calendars`, `pyarrow`
+
+---
+
+## Future Iterations & Planned Improvements
+
+### Tier 1 — Feature Engineering
+
+- **Replace `vix_z` with VIX/Realised-Vol ratio** (`vix_premium_z`): implied vol divided
+  by concurrent realised vol. Encodes forward-looking fear premium rather than raw
+  level — orthogonal to `realized_vol_z`, which currently gets two correlated votes
+  in the HMM clustering.
+  
+- **Add raw trailing return features** (3-month and 12-month Nifty pct_change, not
+  z-scored): a −15% trailing return signals genuine drawdown regardless of historical
+  average. Directly targets the 45% Crisis timing accuracy by separating "VIX spike
+  with market flat" from "VIX spike after market has already fallen 10%+".
+  
+- **Add G-Sec yield level z-score** alongside the existing yield momentum feature: a
+  RBI hiking cycle looks different from a low-and-stable rate environment even when
+  monthly changes are similar. Level + momentum together give the HMM both the
+  direction and the starting point.
+
+### Tier 2 — Regime Architecture
+
+- **Graduated bounds as a function of P(Crisis)**: instead of fixed weight ceilings
+  per regime, make the equity upper bound a continuous function:
+  `equity_upper = 0.75 − 0.55 × P(Crisis)`. Eliminates the hard corner solution
+  where every Bull month produces identical weights regardless of how bullish the
+  signal is.
+  
+- **Restore GILTBEES with a synthetic pre-2018 series**: backfill using the CRISIL
+  Composite Bond Index or NIFTY 10yr Benchmark G-Sec Index (both available from 2003).
+  Re-introduces a genuine fixed-income leg — the asset that rises when rates fall and
+  equities sell off — which gold cannot fully replace in Crisis portfolios.
+  
+- **n=3 HMM with a genuine Bear state**: the PS requires Bull/Bear/Crisis but the
+  current model collapses to 2 states because the feature set can't separate
+  "moderate vol, weak trend" from "low vol, strong trend". Adding `vix_premium_z`
+  and trailing return features should create the necessary third cluster without
+  forcing it via `FORCE_N_STATES`.
+
+### Tier 3 — Execution & Cost Model
+- **Time-varying LIQUIDBEES return**: replace the flat 6.5% proxy with actual
+  RBI MIBOR/TREPS daily rates from the RBI DBIE database. The flat rate understates
+  Crisis portfolio returns in 2013–2016 (MIBOR ~8–9%) and overstates them in
+  2020–2021 (repo rate 4%). Proper time-series makes the Crisis alpha attribution
+  honest.
+  
+- **Asset-class-specific TC vector**: GOLDBEES has no STT (commodity ETF, exempt
+  under Finance Act) — its sell cost should be ~5 bps, not 13 bps. Currently the
+  optimizer slightly underweights gold as a safe haven because it overstates its
+  exit cost.
+  
+- **Market impact model for larger AUM**: the current TC model handles brokerage +
+  STT + stamp duty but ignores market impact. A square-root impact model
+  (`impact = σ × √(trade_size / ADV)`) would let the strategy report the AUM
+  ceiling at which the alpha is destroyed — standard practice for institutional
+  strategy documentation.
+
+### Tier 4 — Validation & Robustness
+- **Monte Carlo regime-label permutation test**: randomly permute the confirmed
+  regime labels 1000 times and rerun the optimizer each time. The real strategy's
+  Sharpe should sit in the top 5% of the permutation distribution — this formally
+  tests whether the HMM regime detection adds value beyond a random labelling scheme.
+  
+- **Rolling window sensitivity analysis**: rerun the full walk-forward with initial
+  training windows of 48, 60, and 84 months. If Sharpe varies materially across
+  window lengths, the strategy is sensitive to this design choice and that
+  sensitivity should be disclosed.
+  
+- **Extending the holdout annually**: re-run Stage 7 once per year on new data
+  (2025, 2026 …) without touching any parameter. Accumulating genuine out-of-sample
+  months is the only way to build statistically meaningful evidence of
+  generalisability beyond the current 11-month window.
