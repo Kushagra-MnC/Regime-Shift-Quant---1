@@ -1,0 +1,13 @@
+regime,group,assets,lower,upper,note
+Bull,Equity,NIFTYBEES|JUNIORBEES,0.6,0.9,Keep bull portfolios structurally risk-on without allowing all-equity concentration
+Bull,Defensive,GOLDBEES|LIQUIDBEES,0.1,0.4,Maintain a modest ballast sleeve
+Bull,SafeHaven,GOLDBEES,0.05,0.3,Prevent full defensive crowding in bull regimes
+Bull,Cash,LIQUIDBEES,0.0,0.1,Limit cash drag
+Bear,Equity,NIFTYBEES|JUNIORBEES,0.15,0.5,Partial de-risking while keeping upside participation
+Bear,Defensive,GOLDBEES|LIQUIDBEES,0.5,0.85,Require majority defensive allocation
+Bear,SafeHaven,GOLDBEES,0.3,0.7,Limit single-category concentration while retaining hedge sleeve
+Bear,Cash,LIQUIDBEES,0.1,0.35,Require liquidity buffer
+Crisis,Equity,NIFTYBEES|JUNIORBEES,0.0,0.15,Hard cap on equity drawdown exposure
+Crisis,Defensive,GOLDBEES|LIQUIDBEES,0.85,1.0,Force defensive capital preservation posture
+Crisis,SafeHaven,GOLDBEES,0.45,0.75,Avoid overloading cash while keeping hedge sleeve meaningful
+Crisis,Cash,LIQUIDBEES,0.25,0.5,Require enough liquidity for crisis state

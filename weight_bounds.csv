@@ -1,0 +1,13 @@
+regime,asset,lower,upper,note
+Bull,NIFTYBEES,0.40,0.65,Core equity exposure during broad bull regimes
+Bull,JUNIORBEES,0.15,0.35,Satellite equity exposure with higher risk cap
+Bull,GOLDBEES,0.00,0.15,Safe-haven sleeve remains capped in bull regimes
+Bull,LIQUIDBEES,0.00,0.10,Cash drag capped in bull regimes
+Bear,NIFTYBEES,0.15,0.35,Reduced core equity exposure
+Bear,JUNIORBEES,0.00,0.15,Small-cap/mid-cap risk heavily capped
+Bear,GOLDBEES,0.20,0.45,Gold defensive allocation
+Bear,LIQUIDBEES,0.10,0.35,Cash buffer
+Crisis,NIFTYBEES,0.00,0.10,Minimal core equity exposure
+Crisis,JUNIORBEES,0.00,0.05,Near-zero higher beta equity exposure
+Crisis,GOLDBEES,0.25,0.50,Primary safe-haven sleeve
+Crisis,LIQUIDBEES,0.25,0.50,Liquidity sleeve
