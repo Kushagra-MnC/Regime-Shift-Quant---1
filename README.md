@@ -63,8 +63,8 @@ dataset/
 
 1. **Clone the repository**:
    ```bash
-   https://github.com/Kushagra-MnC/Regime-Shift-Quant---1
-   cd Regime-Shift-Quant---1.git
+   git clone https://github.com/Kushagra-MnC/Regime-Shift-Quant---1.git
+   cd Regime-Shift-Quant---1
    ```
 
 2. **Create the environment and install dependencies**:
