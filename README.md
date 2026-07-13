@@ -88,7 +88,7 @@ clarabel
 Run the notebooks strictly in sequential order (01 through 07).
 
 > [!NOTE]
-> **Holdout Data**: Notebook `07_Holdout_Sanctity_2024.ipynb` accesses a quarantined dataset. The random seed parameters for the HMM initialization are hardcoded to ensure identical transition matrix generation upon reproduction.
+> **Holdout Data**: Notebook `REGIME_SHIFT_Stage7_f6.ipynb` accesses a quarantined dataset. The random seed parameters for the HMM initialization are hardcoded to ensure identical transition matrix generation upon reproduction.
 
 ### Transition Matrix
 *(Rows = From, Cols = To)*
