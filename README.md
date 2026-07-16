@@ -58,7 +58,7 @@ CVaR uses the Rockafellar–Uryasev formulation (auxiliary variables $\eta$, $u$
 
 ## Repository Structure
 
-The pipeline runs across **6 notebooks**. HMM exploration (BIC grid search) and HMM production (final fit) are combined into a single notebook — there is no separate "Stage 2" file; `hmm_dev.ipynb` does both the model-selection grid and the production fit that earlier drafts of this project split across two notebooks.
+The pipeline runs across **6 notebooks**.
 
 | Notebook | Role | Description |
 |---|---|---|
